@@ -6,7 +6,7 @@ RUN set -eu && \
     bash \
     tzdata \
     shadow \
-    samba \
+    samba && \
     addgroup -S smb && \
     rm -f /etc/samba/smb.conf && \
     rm -rf /tmp/* /var/cache/apk/*
