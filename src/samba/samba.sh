@@ -29,7 +29,7 @@ add_user() {
   # 如果用户不存在则添加
   if ! id "$username" &>/dev/null; then
     echo "User $username does not exist, creating user..."
-    adduser -S -D -H -h /tmp -s /sbin/nologin -G "$groupname" -u "$uid" -g "Samba User" "$username" || { echo "Failed to create user $username"; return 1; }
+    useradd -o -M -N -r -d /tmp -s /sbin/nologin -g "$groupname" -u "$uid" -c "Samba User" "$username" || { echo "Failed to create user $username"; return 1; }
   else
     # 检查 uid 是否正确
     local current_uid
