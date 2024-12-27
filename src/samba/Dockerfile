@@ -15,7 +15,7 @@ COPY --chmod=755 samba.sh /usr/bin/samba.sh
 COPY --chmod=644 smb.conf /etc/samba/smb.default
 
 VOLUME /storage
-EXPOSE 139 445
+EXPOSE 445
 
 ENV NAME="Data"
 ENV USER="samba"

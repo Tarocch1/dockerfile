@@ -82,10 +82,6 @@ else
     sed -i "s/\[Data\]/\[$NAME\]/" "$config"
   fi
 
-  # 设置用户与组
-  sed -i "s/^\(\s*\)force user =.*/\1force user = $USER/" "$config"
-  sed -i "s/^\(\s*\)force group =.*/\1force group = $group/" "$config"
-
   # 处理只读配置
   if [[ "$RW" == [Ff0]* ]]; then
     sed -i "s/^\(\s*\)writable =.*/\1writable = no/" "$config"
@@ -116,13 +112,6 @@ if [ -f "$users" ] && [ -s "$users" ]; then
   done < "$users"
 else
   add_user "$config" "$USER" "$UID" "$group" "$GID" "$PASS" || { echo "Failed to add user $USER"; exit 1; }
-
-  if [[ "$RW" != [Ff0]* ]]; then
-    if [ -z "$(ls -A "$share")" ]; then
-      chmod 0770 "$share" || { echo "Failed to set permissions for directory $share"; exit 1; }
-      chown "$USER:$group" "$share" || { echo "Failed to set ownership for directory $share"; exit 1; }
-    fi
-  fi
 fi
 
-smbd --configfile="$config" --interactive --debug-stdout --debuglevel=1 --no-process-group
+exec smbd --configfile="$config" --interactive --debug-stdout --debuglevel=1 --no-process-group
