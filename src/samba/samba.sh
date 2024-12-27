@@ -114,4 +114,4 @@ else
   add_user "$config" "$USER" "$UID" "$group" "$GID" "$PASS" || { echo "Failed to add user $USER"; exit 1; }
 fi
 
-exec smbd --configfile="$config" --interactive --debug-stdout --debuglevel=1 --no-process-group
+exec smbd --configfile="$config" --interactive --debug-stdout --debuglevel=$LOG_LEVEL --no-process-group

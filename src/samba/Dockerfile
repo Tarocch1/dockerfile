@@ -23,6 +23,7 @@ ENV PASS="secret"
 ENV UID=1000
 ENV GID=1000
 ENV RW=true
+ENV LOG_LEVEL=1
 
 ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/usr/bin/samba.sh"]
