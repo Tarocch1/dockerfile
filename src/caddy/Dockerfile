@@ -2,7 +2,8 @@ FROM caddy:builder-alpine AS builder
 
 RUN set -eu && \
     xcaddy build \
-    --with github.com/greenpau/caddy-security
+    --with github.com/greenpau/caddy-security \
+    --with github.com/sagikazarmark/caddy-fs-s3
 
 FROM caddy:alpine
 
