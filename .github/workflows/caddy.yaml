@@ -6,8 +6,6 @@ on:
       - main
     paths:
       - src/caddy/**
-  schedule:
-    - cron: "0 0 * * 0"
 
 jobs:
   docker:
@@ -39,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: src/caddy
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: |
             ${{ vars.DOCKERHUB_USERNAME }}/caddy:latest
