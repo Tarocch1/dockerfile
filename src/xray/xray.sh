@@ -38,25 +38,32 @@ fi
 XRAY_ZIP_FILE="Xray-linux-${ARCH}.zip"
 
 echo "Downloading zip file: ${XRAY_ZIP_FILE}"
-wget -O /temp/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/${XRAY_ZIP_FILE} > /dev/null 2>&1
+wget -O /tmp/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/${XRAY_ZIP_FILE} > /dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo "Error: Failed to download zip file: ${XRAY_ZIP_FILE}" && exit 1
 fi
 echo "Download zip file: ${XRAY_ZIP_FILE} completed"
 
-echo "Unzipping file: /temp/xray.zip"
-unzip -o /temp/xray.zip -d /temp/xray > /dev/null 2>&1
+echo "Unzipping file: /tmp/xray.zip"
+unzip -o /tmp/xray.zip -d /tmp/xray > /dev/null 2>&1
 if [ $? -ne 0 ]; then
-  echo "Error: Failed to unzip file: /temp/xray.zip" && exit 1
+  echo "Error: Failed to unzip file: /tmp/xray.zip" && exit 1
 fi
-echo "Unzipping file: /temp/xray.zip completed"
+echo "Unzipping file: /tmp/xray.zip completed"
 
 echo "Moving xray binary to /usr/bin/xray"
-mv /temp/xray/xray /usr/bin/xray > /dev/null 2>&1
+mv /tmp/xray/xray /usr/bin/xray > /dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo "Error: Failed to move xray binary to /usr/bin/xray" && exit 1
 fi
 echo "Moving xray binary to /usr/bin/xray completed"
+
+echo "Cleaning up temporary files"
+rm -rf /tmp/xray /tmp/xray.zip > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "Error: Failed to clean up temporary files" && exit 1
+fi
+echo "Cleaning up temporary files completed"
 
 echo "Setting xray binary to executable"
 chmod +x /usr/bin/xray > /dev/null 2>&1
